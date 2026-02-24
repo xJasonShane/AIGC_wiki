@@ -1,0 +1,26 @@
+{
+  "id": "card-001",
+  "title": "梦幻森林精灵",
+  "thumbnail": "images/thumb/forest-spirit.jpg",
+  "fullImage": "images/full/forest-spirit.jpg",
+  "model": {
+    "name": "DreamShaper_v8",
+    "type": "SD 1.5"
+  },
+  "parameters": {
+    "sampler": "DPM++ 2M Karras",
+    "cfg": 7.5,
+    "steps": 30,
+    "vae": "vae-ft-mse-840000",
+    "upscaler": "R-ESRGAN 4x+",
+    "seed": 1234567890,
+    "size": "512x768"
+  },
+  "loras": [
+    { "name": "detail_tweaker", "weight": 0.5 },
+    { "name": "add_detail", "weight": 0.8 }
+  ],
+  "prompt": "a beautiful forest spirit, ethereal glow, magical atmosphere, detailed face, flowing hair, nature elements, fantasy art, masterpiece, best quality",
+  "negativePrompt": "ugly, blurry, low quality, distorted, deformed",
+  "createdAt": "2024-01-15"
+}

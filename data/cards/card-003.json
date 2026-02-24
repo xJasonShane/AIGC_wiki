@@ -1,0 +1,26 @@
+{
+  "id": "card-003",
+  "title": "古风人物肖像",
+  "thumbnail": "images/thumb/portrait-ancient.jpg",
+  "fullImage": "images/full/portrait-ancient.jpg",
+  "model": {
+    "name": "Guofeng_V3",
+    "type": "SD 1.5"
+  },
+  "parameters": {
+    "sampler": "DPM++ SDE Karras",
+    "cfg": 8.0,
+    "steps": 35,
+    "vae": "vae-ft-mse-840000",
+    "upscaler": "R-ESRGAN 4x+ Anime6B",
+    "seed": 5678901234,
+    "size": "512x768"
+  },
+  "loras": [
+    { "name": "hanfu_traditional", "weight": 0.6 },
+    { "name": "beautiful_face", "weight": 0.4 }
+  ],
+  "prompt": "ancient chinese portrait, traditional hanfu, elegant pose, soft lighting, delicate features, ink wash painting style, classical beauty, masterpiece",
+  "negativePrompt": "modern clothing, glasses, western style, low quality, distorted face",
+  "createdAt": "2024-02-01"
+}

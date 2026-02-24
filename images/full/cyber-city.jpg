@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0f1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a0a2e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect fill="url(#grad2)" width="300" height="400"/>
+  <rect x="20" y="250" width="60" height="150" fill="#ef4444" opacity="0.3"/>
+  <rect x="90" y="200" width="50" height="200" fill="#06b6d4" opacity="0.4"/>
+  <rect x="150" y="180" width="70" height="220" fill="#7c3aed" opacity="0.5"/>
+  <rect x="230" y="220" width="50" height="180" fill="#f59e0b" opacity="0.4"/>
+  <circle cx="80" cy="100" r="30" fill="#f59e0b" opacity="0.6"/>
+  <text x="150" y="320" fill="#9090a0" text-anchor="middle" font-family="sans-serif" font-size="14">赛博朋克城市</text>
+</svg>

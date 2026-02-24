@@ -1,0 +1,25 @@
+{
+  "id": "card-002",
+  "title": "赛博朋克城市",
+  "thumbnail": "images/thumb/cyber-city.jpg",
+  "fullImage": "images/full/cyber-city.jpg",
+  "model": {
+    "name": "Realistic_Vision_V5.1",
+    "type": "SD 1.5"
+  },
+  "parameters": {
+    "sampler": "Euler a",
+    "cfg": 6.0,
+    "steps": 25,
+    "vae": "None",
+    "upscaler": "ESRGAN_4x",
+    "seed": 9876543210,
+    "size": "768x512"
+  },
+  "loras": [
+    { "name": "cyberpunk_style", "weight": 0.7 }
+  ],
+  "prompt": "cyberpunk city street at night, neon lights, rain reflections, futuristic architecture, blade runner style, cinematic lighting, highly detailed, 8k",
+  "negativePrompt": "daylight, sunny, clean streets, low resolution, blurry",
+  "createdAt": "2024-01-20"
+}

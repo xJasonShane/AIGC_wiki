@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIGC Wiki - AI图片参数展示</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">
+                <span class="logo-icon">✦</span>
+                AIGC Wiki
+            </h1>
+            <p class="tagline">探索AI艺术的参数奥秘</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2 class="section-title">作品展示</h2>
+                <span class="card-count" id="cardCount">0 张作品</span>
+            </div>
+            <div class="card-grid" id="cardGrid">
+                <!-- 卡片将通过JS动态生成 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 详情模态框 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose" aria-label="关闭">×</button>
+            <div class="modal-content">
+                <div class="modal-image-container">
+                    <img src="" alt="" class="modal-image" id="modalImage">
+                </div>
+                <div class="modal-info">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-date" id="modalDate"></div>
+                    
+                    <div class="info-section">
+                        <h3 class="info-section-title">模型信息</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">模型名称</span>
+                                <span class="info-value" id="modalModelName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">模型类型</span>
+                                <span class="info-value" id="modalModelType">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3 class="info-section-title">生成参数</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">采样方法</span>
+                                <span class="info-value" id="modalSampler">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">CFG Scale</span>
+                                <span class="info-value" id="modalCfg">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Steps</span>
+                                <span class="info-value" id="modalSteps">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">尺寸</span>
+                                <span class="info-value" id="modalSize">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">VAE</span>
+                                <span class="info-value" id="modalVae">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">放大算法</span>
+                                <span class="info-value" id="modalUpscaler">-</span>
+                            </div>
+                            <div class="info-item full-width">
+                                <span class="info-label">Seed</span>
+                                <span class="info-value seed-value" id="modalSeed">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-section" id="loraSection">
+                        <h3 class="info-section-title">LoRA模型</h3>
+                        <div class="lora-list" id="modalLoras">
+                            <!-- LoRA列表将动态生成 -->
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3 class="info-section-title">提示词</h3>
+                        <div class="prompt-box">
+                            <span class="prompt-label">Positive</span>
+                            <p class="prompt-text" id="modalPrompt">-</p>
+                        </div>
+                        <div class="prompt-box negative">
+                            <span class="prompt-label">Negative</span>
+                            <p class="prompt-text" id="modalNegativePrompt">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>AIGC Wiki © 2024 | 记录AI艺术的每一份灵感</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
