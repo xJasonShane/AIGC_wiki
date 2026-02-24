@@ -4,110 +4,145 @@
 
 [![Deploy on Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-F38020?logo=cloudflare)](https://pages.cloudflare.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Pure Static](https://img.shields.io/badge/类型-纯静态-4A90D9)]()
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org/)
 
 ## 功能特点
 
 - **响应式布局** - 自适应卡片网格，支持各种屏幕尺寸
 - **参数展示** - 点击卡片查看完整生成参数（模型、采样器、CFG、VAE、LoRA等）
-- **模块化管理** - 每张卡片独立JSON文件，便于维护和扩展
-- **零依赖** - 纯静态实现，无需后端服务，部署简单
+- **管理后台** - 通过UI界面管理卡片，无需修改代码
+- **文件上传** - 支持图片上传和预览
+- **安全认证** - JWT会话管理，管理员权限控制
 
 ## 快速开始
 
-### 本地预览
+### 环境要求
 
-直接用浏览器打开 `index.html`，或使用本地服务器：
+- Node.js 18+
+- npm 或 yarn
+
+### 安装
 
 ```bash
-# Python
-python -m http.server 8080
-
-# Node.js
-npx serve
+npm install
 ```
 
-### 部署到 Cloudflare Pages
+### 配置
 
-1. 将项目推送到 GitHub 仓库
-2. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)，进入 Pages
-3. 点击「创建项目」→「连接到 Git」
-4. 选择仓库和分支
-5. 构建设置留空（纯静态项目无需构建命令）
-6. 点击「保存并部署」
+复制环境变量文件：
 
-部署完成后，Cloudflare 会自动分配 `*.pages.dev` 域名。
+```bash
+cp .env.example .env
+```
+
+编辑 `.env` 文件，配置：
+- `JWT_SECRET` - JWT密钥（生产环境必须更换）
+- `ADMIN_USERNAME` - 管理员用户名
+- `ADMIN_PASSWORD` - 管理员密码
+
+### 初始化数据库
+
+```bash
+npm run db:generate  # 生成Prisma客户端
+npm run db:push      # 创建数据库表
+npm run db:seed      # 创建管理员账户
+```
+
+### 开发
+
+```bash
+npm run dev
+```
+
+访问 http://localhost:3000
+
+## 管理员登录
+
+- 登录地址: http://localhost:3000/login
+- 默认账号: `admin`
+- 默认密码: `admin123`
+
+**⚠️ 生产环境请务必修改默认密码**
 
 ## 目录结构
 
 ```
-AIGC_wiki/
-├── index.html           # 主页面
-├── css/
-│   └── style.css        # 样式文件
-├── js/
-│   └── app.js           # 主逻辑
-├── data/
-│   └── cards/           # 卡片数据
-│       ├── index.json   # 卡片索引
-│       └── *.json       # 各卡片数据文件
-├── images/
-│   ├── thumb/           # 缩略图
-│   └── full/            # 原图
-└── README.md
+src/
+├── app/
+│   ├── page.tsx              # 首页（卡片展示）
+│   ├── layout.tsx            # 全局布局
+│   ├── globals.css           # 全局样式
+│   ├── login/                # 登录页面
+│   ├── admin/cards/          # 管理面板
+│   └── api/                  # API路由
+│       ├── auth/             # 认证接口
+│       ├── cards/            # 卡片CRUD
+│       └── upload/           # 文件上传
+├── components/               # React组件
+│   ├── AdminBar.tsx          # 管理员工具栏
+│   └── CardModal.tsx         # 卡片详情模态框
+├── lib/                      # 工具函数
+│   ├── auth.ts               # 认证工具
+│   ├── db.ts                 # 数据库连接
+│   └── middleware.ts         # API中间件
+└── types/                    # TypeScript类型
+prisma/
+├── schema.prisma             # 数据库模型
+└── seed.ts                   # 种子数据
 ```
 
-## 添加新卡片
+## API接口
 
-### 步骤
+| 方法 | 路径 | 描述 | 认证 |
+|------|------|------|------|
+| POST | /api/auth/login | 管理员登录 | 否 |
+| POST | /api/auth/logout | 登出 | 否 |
+| GET | /api/auth/me | 检查登录状态 | 否 |
+| GET | /api/cards | 获取卡片列表 | 否 |
+| GET | /api/cards/:id | 获取卡片详情 | 否 |
+| POST | /api/cards | 创建卡片 | 是 |
+| PUT | /api/cards/:id | 更新卡片 | 是 |
+| DELETE | /api/cards/:id | 删除卡片 | 是 |
+| POST | /api/upload | 上传文件 | 是 |
 
-1. 将图片放入对应目录：
-   - 缩略图 → `images/thumb/`
-   - 原图 → `images/full/`
+## 部署
 
-2. 在 `data/cards/` 创建 JSON 文件（如 `card-004.json`）
+### Vercel（推荐）
 
-3. 在 `data/cards/index.json` 中添加文件名
-
-### JSON 格式
-
-```json
-{
-  "id": "unique-id",
-  "title": "图片标题",
-  "thumbnail": "images/thumb/example.jpg",
-  "fullImage": "images/full/example.jpg",
-  "model": {
-    "name": "模型名称",
-    "type": "Checkpoint / LoRA"
-  },
-  "parameters": {
-    "sampler": "DPM++ 2M Karras",
-    "cfg": 7.5,
-    "steps": 30,
-    "vae": "vae-ft-mse-840000",
-    "upscaler": "R-ESRGAN 4x+",
-    "seed": 123456789,
-    "size": "512x768"
-  },
-  "loras": [
-    { "name": "LoRA名称", "weight": 0.8 }
-  ],
-  "prompt": "正向提示词",
-  "negativePrompt": "负面提示词",
-  "createdAt": "2024-01-01"
-}
+```bash
+npm install -g vercel
+vercel
 ```
+
+### Cloudflare Pages
+
+1. 推送代码到 GitHub
+2. 在 Cloudflare Dashboard 创建 Pages 项目
+3. 连接 GitHub 仓库
+4. 构建命令: `npm run build`
+5. 输出目录: `.next`
+6. 配置环境变量
+
+**注意**: Cloudflare Pages 需要配置 D1 数据库或外部数据库。
+
+### 生产环境配置
+
+生产环境必须配置：
+
+1. 更换 `JWT_SECRET` 为强随机字符串
+2. 修改默认管理员密码
+3. 配置生产数据库（PostgreSQL 推荐）
 
 ## 技术栈
 
 | 技术 | 用途 |
 |------|------|
-| HTML5 | 页面结构 |
-| CSS3 (Grid + Flexbox) | 响应式布局 |
-| JavaScript (ES6+) | 交互逻辑 |
-
-无框架依赖，最小化实现。
+| Next.js 14 | 全栈框架 |
+| TypeScript | 类型安全 |
+| Tailwind CSS | 样式 |
+| Prisma | ORM |
+| SQLite/PostgreSQL | 数据库 |
+| JWT | 会话管理 |
 
 ## License
 

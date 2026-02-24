@@ -1,5 +1,7 @@
 # Dependencies
 node_modules/
+.pnp
+.pnp.js
 
 # IDE
 .idea/
@@ -14,15 +16,43 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Build outputs
-dist/
+# Next.js
+.next/
+out/
 build/
+dist/
 
 # Environment
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Trae specs (optional - uncomment if you don't want to track specs)
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Uploaded images (optional)
+# public/images/uploads/
+
+# Trae specs
 .trae/
+
+# Old static files (migrated to Next.js)
+/css/
+/js/
+/data/
+/images/thumb/
+/images/full/
+/index.html

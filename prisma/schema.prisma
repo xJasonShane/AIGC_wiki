@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Card {
+  id              String   @id @default(cuid())
+  title           String
+  thumbnail       String?
+  fullImage       String?
+  modelName       String?  @map("model_name")
+  modelType       String?  @map("model_type")
+  sampler         String?
+  cfg             Float?
+  steps           Int?
+  vae             String?
+  upscaler        String?
+  seed            String?
+  size            String?
+  prompt          String?
+  negativePrompt  String?  @map("negative_prompt")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  loras           Lora[]
+
+  @@map("cards")
+}
+
+model Lora {
+  id       String  @id @default(cuid())
+  cardId   String  @map("card_id")
+  name     String
+  weight   Float
+  card     Card    @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@map("loras")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("admins")
+}
